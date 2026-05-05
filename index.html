@@ -280,6 +280,58 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+     const glume = [
+      "daca vrei la poli primii 7 ani sunt grei pana intrii in anul 3 asa ca mai gandeste te",
+      "fara un pachet de tigari sau 1l de vin cam greu cu portaru",
+      "sa n ai absente tre sa fii prea prost copil",
+      "absentele se motiveaza, orele se recupereaza, notele se repara, chiuleste cat mai poti",
+      "o zi completa la scoala = o viata mai scurta",
+      "daca vii la scoala sa inveti mai bine stai acasa",
+      "bravo rege ai intrat la maio, dar ai grija sa si iesi",
+      "baga goluri pana nu se prinde ma ta",
+      "nu face poza la tabla ca uzezi bitii degeaba",
+      "un caiet pentru orice, salvam natura",
+      "nu te gandi la bac pana in ziua aia",
+      "olimpiada religie = o saptamana libera",
+      "nu renunta sa speri ca treci",
+      "nu abuza de inteligenta nativa. e limitata",
+      "si steaua mai rateaza play-off ul",
+      "la mega nu ti cere c++",
+      "fa bani nu ore la scoala",
+      "te ai plictisit? pune sunetul de incendiu",
+      "treci prin scoala ca motorina prin furtun",
+      "fenteaza tot ce poti, fii rege"
+    ];
+
+    // Day-of-year so it cycles: same joke all day, different each day, repeats every 20 days
+    function getDayOfYear() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start;
+      return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
+
+    const idx = getDayOfYear() % glume.length;
+    const glumaText = glume[idx];
+
+    // Render
+    document.getElementById('glumaText').textContent = '\u201c' + glumaText + '\u201d';
+    document.getElementById('glumaNum').textContent = (idx + 1);
+
+    // Format today's date nicely
+    const today = new Date();
+    const dayStr = today.toLocaleDateString('ro-RO', { weekday: 'long', day: 'numeric', month: 'long' });
+    document.getElementById('glumaDay').textContent = dayStr;
+
+    // Dots — show position in the 20-cycle as a mini progress indicator
+    const dotsEl = document.getElementById('glumaDots');
+    // Show 5 dots representing the current "group of 4" for a compact indicator
+    const totalDots = 20;
+    for (let i = 0; i < totalDots; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'gluma-dot' + (i === idx ? ' active' : '');
+      dotsEl.appendChild(dot);
+    }
   </script>
 
 </body>
