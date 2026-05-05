@@ -193,6 +193,105 @@ section { padding: 7rem 4rem; border-bottom: 1px solid var(--border); }
   color: var(--muted);
   text-align: left;
 }
+/* gluma */
+  #gluma {
+      padding: 6rem 2rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .gluma-card {
+      margin-top: 2.5rem;
+      border: 1.5px solid currentColor;
+      border-radius: 4px;
+      padding: 2.5rem 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .gluma-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .gluma-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 5rem;
+      line-height: 1;
+      opacity: 0.08;
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      user-select: none;
+    }
+
+    .gluma-badge {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      margin-bottom: 1.4rem;
+    }
+
+    .gluma-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.15rem, 3vw, 1.55rem);
+      line-height: 1.55;
+      font-style: italic;
+      margin: 0 0 2rem;
+    }
+
+    .gluma-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .gluma-day {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
+    .gluma-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .gluma-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.15;
+      transition: opacity 0.3s;
+    }
+
+    .gluma-dot.active {
+      opacity: 0.7;
+    }
+
+    /* animate in */
+    .gluma-card {
+      animation: glumaIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.2s;
+    }
+
+    @keyframes glumaIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 /* FAQ */
 #faq { max-width: 720px; margin: 0 auto; }
 .faq-list { margin-top: 1rem; }
