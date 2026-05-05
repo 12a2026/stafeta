@@ -269,7 +269,7 @@
   </footer>
 
   <script>
-    function toggle(el) {
+       function toggle(el) {
       const item = el.closest('.faq-item');
       const isOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
@@ -280,7 +280,8 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-     const glume = [
+
+    const glume = [
       "daca vrei la poli primii 7 ani sunt grei pana intrii in anul 3 asa ca mai gandeste te",
       "fara un pachet de tigari sau 1l de vin cam greu cu portaru",
       "sa n ai absente tre sa fii prea prost copil",
@@ -303,7 +304,6 @@
       "fenteaza tot ce poti, fii rege"
     ];
 
-    // Day-of-year so it cycles: same joke all day, different each day, repeats every 20 days
     function getDayOfYear() {
       const now = new Date();
       const start = new Date(now.getFullYear(), 0, 0);
@@ -311,28 +311,24 @@
       return Math.floor(diff / (1000 * 60 * 60 * 24));
     }
 
+    const today = new Date();
     const idx = getDayOfYear() % glume.length;
     const glumaText = glume[idx];
 
-    // Render
     document.getElementById('glumaText').textContent = '\u201c' + glumaText + '\u201d';
-   document.getElementById('glumaNum').textContent = today.getDate();
+    document.getElementById('glumaNum').textContent = today.getDate();
 
-
-    // Format today's date nicely
-    const today = new Date();
     const dayStr = today.toLocaleDateString('ro-RO', { weekday: 'long', day: 'numeric', month: 'long' });
     document.getElementById('glumaDay').textContent = dayStr;
 
-    // Dots — show position in the 20-cycle as a mini progress indicator
     const dotsEl = document.getElementById('glumaDots');
-    // Show 5 dots representing the current "group of 4" for a compact indicator
     const totalDots = 20;
     for (let i = 0; i < totalDots; i++) {
       const dot = document.createElement('div');
       dot.className = 'gluma-dot' + (i === idx ? ' active' : '');
       dotsEl.appendChild(dot);
     }
+
   </script>
 
 </body>
