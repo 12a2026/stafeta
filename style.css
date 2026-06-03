@@ -153,13 +153,55 @@ section { padding: 7rem 4rem; border-bottom: 1px solid var(--border); }
   color: var(--muted);
   letter-spacing: .05em;
 }
+.diriginta-card {
+  position: relative;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem 2.5rem;
+  background: rgba(153, 121, 14, 0.06);
+  border: 1px solid rgba(145, 124, 64, 0.808);
+  border-radius: 4px;
+  text-align: center;
+}
 
+.diriginta-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 40%; height: 2px;
+  background: linear-gradient(90deg, transparent, #d6be6f, transparent);
+}
+
+.diriginta-label {
+  font-family: 'Georgia', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #e0bd58;
+  margin: 0 0 1.1rem;
+}
+
+.diriginta-quote {
+  font-family: 'Georgia', serif;
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
+  font-style: italic;
+  color: #242424;
+  line-height: 1.55;
+  margin: 0 0 1.1rem;
+}
+
+.diriginta-stars {
+  color: #e0bd58;
+  font-size: 0.9rem;
+  letter-spacing: 0.25em;
+}
 /* MESSAGE */
 #message { max-width: 720px; margin: 0 auto; }
 .message-body {
   font-size: 1.05rem;
   line-height: 1.9;
   color: #222220;
+  font-family: Arial;
 }
 .message-body p + p { margin-top: 1.5rem; }
 .message-body strong {
