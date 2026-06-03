@@ -508,98 +508,91 @@ Așa că nu vă temeți de concepția că v ați irosit anii de liceu sau că as
   </footer>
 
   <script>
-    setTimeout(
-      () => document.getElementById('read-note').style.opacity = '0',
-      3699
-    )
-       function toggle(el) {
-      const item = el.closest('.faq-item');
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    }
+  // ── read note fade ──────────────────────────────────────────────
+  const readNote = document.getElementById('read-note');
+  readNote.style.transition = 'opacity 0.8s ease';
+  setTimeout(() => { readNote.style.opacity = '0'; }, 3699);
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  // ── scroll hint fade on scroll ──────────────────────────────────
+  const scrollHint = document.querySelector('.scroll-hint');
+  if (scrollHint) {
+    scrollHint.style.transition = 'opacity 0.5s ease';
+    window.addEventListener('scroll', () => {
+      scrollHint.style.opacity = window.scrollY > 80 ? '0' : '1';
+    }, { passive: true });
+  }
 
-    const glume = [
-"daca vrei la poli primii 7 ani sunt grei pana intrii in anul 3 asa ca mai gandeste te",
-"sa n ai absente tre sa fii prea prost copil",
-"absentele se motiveaza, orele se recupereaza, notele se repara, chiuleste cat mai poti",
-"o zi completa la scoala = o viata mai scurta",
-"daca vii la scoala sa inveti mai bine stai acasa",
-"bravo rege ai intrat la maio, dar ai grija sa si iesi",
-"baga goluri pana nu se prinde ma ta",
-"nu face poza la tabla ca uzezi bitii degeaba",
-"un caiet pentru orice, salvam natura",
-"nu te gandi la bac pana in ziua aia",
-"olimpiada religie = o saptamana libera",
-"nu renunta sa speri ca treci",
-"nu abuza de inteligenta nativa. e limitata",
-"si steaua mai rateaza play-off ul",
-"la mega nu ti cere c++",
-"fa bani nu ore la scoala",
-"te ai plictisit? pune sunetul de incendiu",
-"treci prin scoala ca motorina prin furtun",
-"fenteaza tot ce poti, fii rege",
-"colegul cu care copiezi e cel mai bun prieten",
-"nu pierde pauza ca doar d aia ai venit la scoala",
-"bursa ramane un mister",
-"ultima ora nu se face niciodata",
-"religia se face la blitz",
-"cine a scris enigma lu otilia?",
-"o carte citita e un grătar pierdut",
-"matematica o mai uiti, dar colegul de banca niciodata"
-];
+  // ── faq toggle ──────────────────────────────────────────────────
+  function toggle(el) {
+    const item = el.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
 
-    function getDayOfYear() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now - start;
-  return Math.floor(diff / (1000 * 60 * 60 * 24));
-}
+  // ── fade-in observer ────────────────────────────────────────────
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-const today = new Date();
+  // ── daily joke ──────────────────────────────────────────────────
+  const glume = [
+    "daca vrei la poli primii 7 ani sunt grei pana intrii in anul 3 asa ca mai gandeste te",
+    "sa n ai absente tre sa fii prea prost copil",
+    "absentele se motiveaza, orele se recupereaza, notele se repara, chiuleste cat mai poti",
+    "o zi completa la scoala = o viata mai scurta",
+    "daca vii la scoala sa inveti mai bine stai acasa",
+    "bravo rege ai intrat la maio, dar ai grija sa si iesi",
+    "baga goluri pana nu se prinde ma ta",
+    "nu face poza la tabla ca uzezi bitii degeaba",
+    "un caiet pentru orice, salvam natura",
+    "nu te gandi la bac pana in ziua aia",
+    "olimpiada religie = o saptamana libera",
+    "nu renunta sa speri ca treci",
+    "nu abuza de inteligenta nativa. e limitata",
+    "si steaua mai rateaza play-off ul",
+    "la mega nu ti cere c++",
+    "fa bani nu ore la scoala",
+    "te ai plictisit? pune sunetul de incendiu",
+    "treci prin scoala ca motorina prin furtun",
+    "fenteaza tot ce poti, fii rege",
+    "colegul cu care copiezi e cel mai bun prieten",
+    "nu pierde pauza ca doar d aia ai venit la scoala",
+    "bursa ramane un mister",
+    "ultima ora nu se face niciodata",
+    "religia se face la blitz",
+    "cine a scris enigma lu otilia?",
+    "o carte citita e un gratar pierdut",
+    "matematica o mai uiti, dar colegul de banca niciodata"
+  ];
 
-// hard override for 4 june 2026
-const isSpecialDay =
-  today.getFullYear() === 2026 &&
-  today.getMonth() === 5 && // june (0-indexed)
-  today.getDate() === 4;
+  function getDayOfYear() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    return Math.floor((now - start) / 86400000);
+  }
 
-let idx;
+  const today = new Date();
+  const isSpecialDay = today.getFullYear() === 2026 && today.getMonth() === 5 && today.getDate() === 4;
+  const idx = isSpecialDay
+    ? glume.findIndex(g => g.includes('motorina'))
+    : getDayOfYear() % glume.length;
 
-if (isSpecialDay) {
-  idx = glume.findIndex(g => g.includes('motorina')); // "treci prin scoala ca motorina prin furtun"
-} else {
-  idx = getDayOfYear() % glume.length;
-}
+  document.getElementById('glumaText').textContent = '\u201c' + glume[idx] + '\u201d';
+  document.getElementById('glumaNum').textContent = today.getDate();
+  document.getElementById('glumaDay').textContent = today.toLocaleDateString('ro-RO', {
+    weekday: 'long', day: 'numeric', month: 'long'
+  });
 
-const glumaText = glume[idx];
-
-document.getElementById('glumaText').textContent = '\u201c' + glumaText + '\u201d';
-document.getElementById('glumaNum').textContent = today.getDate();
-
-const dayStr = today.toLocaleDateString('ro-RO', {
-  weekday: 'long',
-  day: 'numeric',
-  month: 'long'
-});
-document.getElementById('glumaDay').textContent = dayStr;
-
-const dotsEl = document.getElementById('glumaDots');
-const totalDots = 20;
-dotsEl.innerHTML = "";
-
-for (let i = 0; i < totalDots; i++) {
-  const dot = document.createElement('div');
-  dot.className = 'gluma-dot' + (i === idx ? ' active' : '');
-  dotsEl.appendChild(dot);
-}
-
-  </script>
+  const dotsEl = document.getElementById('glumaDots');
+  glume.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'gluma-dot' + (i === idx ? ' active' : '');
+    dotsEl.appendChild(dot);
+  });
+</script>
 
 </body>
 </html>
